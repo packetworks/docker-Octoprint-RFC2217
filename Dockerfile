@@ -1,7 +1,7 @@
 
 FROM python:2.7
 EXPOSE 5000
-LABEL maintainer "gaetancollaud@gmail.com"
+LABEL maintainer "Charles Gunzelman"
 
 ENV CURA_VERSION=15.04.6
 ARG tag=master
@@ -39,11 +39,9 @@ USER octoprint
 RUN mkdir /home/octoprint/.octoprint
 
 #Install Octoprint
-RUN git clone --branch $tag https://github.com/foosel/OctoPrint.git /opt/octoprint \
-  && virtualenv venv \
-	&& ./venv/bin/python setup.py install
+RUN git clone --branch $tag https://github.com/foosel/OctoPrint.git /opt/octoprint
+COPY ./comm.py /opt/octoprint/src/octoprint/util/comm.py
+RUN virtualenv venv && ./venv/bin/python setup.py install
 
 VOLUME /home/octoprint/.octoprint
-
-
 CMD ["/opt/octoprint/venv/bin/octoprint", "serve"]
