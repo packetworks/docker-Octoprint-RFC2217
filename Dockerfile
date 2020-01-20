@@ -1,4 +1,4 @@
-FROM:nunofgs/octoprint:alpine
+FROM nunofgs/octoprint:alpine
 
 COPY --from=alpine/socat /usr/bin/socat /bin/socat
 COPY socat.sh ~/.octoprint/socat.sh
